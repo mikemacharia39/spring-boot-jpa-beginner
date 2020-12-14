@@ -5,7 +5,6 @@ import com.mikehenry.springbootjpabeginner.model.Employee;
 import com.mikehenry.springbootjpabeginner.request.CreateEmployeePayload;
 import com.mikehenry.springbootjpabeginner.response.EmployeeResponse;
 import com.mikehenry.springbootjpabeginner.service.EmployeeService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
