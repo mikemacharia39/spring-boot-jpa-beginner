@@ -3,8 +3,11 @@ package com.mikehenry.springbootjpabeginner.service;
 import com.mikehenry.springbootjpabeginner.Utils.Utilities;
 import com.mikehenry.springbootjpabeginner.model.Employee;
 import com.mikehenry.springbootjpabeginner.repository.EmployeeRepository;
+import com.mikehenry.springbootjpabeginner.request.InQueryRequest;
 import com.mikehenry.springbootjpabeginner.request.UpdateEmployeePayload;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,5 +78,44 @@ public class EmployeeService {
         employee.setActive(status);
 
         return Optional.of(employeeRepository.save(employee));
+    }
+
+    /**
+     * To search employees with first name
+     * @param firstName Name of employee
+     * @return List of employees
+     */
+    public List<Employee> getEmployeeByFirstName(String firstName) {
+        return employeeRepository.findByFirstName(firstName);
+    }
+
+    /**
+     * To get employees with by using firstName in
+     * @param inQueryRequest a List containing Strings
+     * @return List of employees
+     */
+    public List<Employee> getEmployeeByFirstNameIn(InQueryRequest inQueryRequest) {
+        return employeeRepository.findByFirstNameIn(inQueryRequest.getFirstNames());
+    }
+
+    /**
+     * To get paginated data. The concept behind pagination is
+     * Page   Skip      PageSize
+     * 1      0         10
+     * 2      10        10
+     * 3      20        10
+     * n      (n-1)10   10
+     *
+     * The reason for pageNumber - 1 is because in sql it represents the offset i.e.
+     * SELECT * FROM employees LIMIT 10 offset 0 or 1
+     *
+     * @param pageNumber page
+     * @param pageSize  limit
+     * @return List of Employees
+     */
+    public List<Employee> getEmployeeWithPagination(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+
+        return employeeRepository.findAll(pageable).getContent();
     }
 }

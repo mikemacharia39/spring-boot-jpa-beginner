@@ -4,6 +4,7 @@ package com.mikehenry.springbootjpabeginner.controller;
 import com.mikehenry.springbootjpabeginner.Utils.Utilities;
 import com.mikehenry.springbootjpabeginner.model.Employee;
 import com.mikehenry.springbootjpabeginner.request.CreateEmployeePayload;
+import com.mikehenry.springbootjpabeginner.request.InQueryRequest;
 import com.mikehenry.springbootjpabeginner.request.UpdateEmployeePayload;
 import com.mikehenry.springbootjpabeginner.response.EmployeeResponse;
 import com.mikehenry.springbootjpabeginner.service.EmployeeService;
@@ -110,6 +111,59 @@ public class EmployeeController {
         response.put("statusCode", 1);
         response.put("message", "successfully deactivated employee");
         response.put("data", employeeResponseList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("searchByFirstName/{firstName}")
+    public ResponseEntity<Object> getEmployeeByFirstName(@PathVariable String firstName) {
+        List<Employee> employeeList = employeeService.getEmployeeByFirstName(firstName);
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+
+        for (Employee employee : employeeList) {
+            employeeResponseList.add(new EmployeeResponse(employee));
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("statusCode", 1);
+        response.put("message", "successfully fetched data");
+        response.put("data",employeeResponseList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("getFirstNamesIn")
+    public ResponseEntity<Object> getFirstNamesIn(@RequestBody InQueryRequest inQueryRequest) {
+        List<Employee> employeeList = employeeService.getEmployeeByFirstNameIn(inQueryRequest);
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+
+        for (Employee employee : employeeList) {
+            employeeResponseList.add(new EmployeeResponse(employee));
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("statusCode", 1);
+        response.put("message", "successfully fetched data");
+        response.put("data",employeeResponseList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("getEmployeeWithPagination")
+    public ResponseEntity<Object> getEmployeeWithPagination(@RequestParam(name = "pageNo") int pageNumber,
+                                          @RequestParam(name = "size", required = false, defaultValue = "10") int pageSize) {
+
+        List<Employee> employeeList = employeeService.getEmployeeWithPagination(pageNumber, pageSize);
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+
+        for(Employee employee : employeeList) {
+            employeeResponseList.add(new EmployeeResponse(employee));
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("statusCode", 1);
+        response.put("message", "successfully fetched data");
+        response.put("data",employeeResponseList);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
