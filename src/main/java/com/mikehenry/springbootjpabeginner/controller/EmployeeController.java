@@ -167,4 +167,38 @@ public class EmployeeController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("getAllEmployeesSorted")
+    public ResponseEntity<Object> getAllEmployeesSorted() {
+        List<Employee> employeeList = employeeService.getAllEmployeesSorted();
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+
+        employeeList.stream().forEach(employee -> {
+            employeeResponseList.add(new EmployeeResponse(employee));
+        });
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("statusCode", 1);
+        response.put("message", "successfully fetched employees");
+        response.put("data", employeeResponseList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("getAllEmployeesSortedLimitWithLimit")
+    public ResponseEntity<Object> getAllEmployeesPaginatedSorted() {
+        List<Employee> employeeList = employeeService.getAllEmployeesSortedWithLimit();
+        List<EmployeeResponse> employeeResponseList = new ArrayList<>();
+
+        employeeList.stream().forEach(employee -> {
+            employeeResponseList.add(new EmployeeResponse(employee));
+        });
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("statusCode", 1);
+        response.put("message", "successfully fetched employees");
+        response.put("data", employeeResponseList);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

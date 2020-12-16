@@ -8,6 +8,7 @@ import com.mikehenry.springbootjpabeginner.request.UpdateEmployeePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -118,4 +119,26 @@ public class EmployeeService {
 
         return employeeRepository.findAll(pageable).getContent();
     }
+
+    /**
+     * To return the list of all employees in sorted order
+     * You can add multiple sort criteria separated by comma (,) i.e. "employeeID", "firstName" etc
+     * @return List of all employees
+     */
+    public List<Employee> getAllEmployeesSorted() {
+        Sort sort = Sort.by(Sort.Direction.DESC, "employeeID");
+
+        return employeeRepository.findAll(sort);
+    }
+
+    /**
+     * To return the list of all employees paginated and sorted in DESC with employeeID
+     * @return List of all employees
+     */
+    public List<Employee> getAllEmployeesSortedWithLimit() {
+        Pageable pageable = PageRequest.of(0, 1, Sort.Direction.DESC, "employeeID");
+
+        return employeeRepository.findAll(pageable).getContent();
+    }
+
 }
