@@ -33,9 +33,9 @@ public class EmployeeController {
         List<Employee> employeeList = employeeService.getAllEmployees();
         List<EmployeeResponse> employeeResponseList = new ArrayList<>();
 
-        employeeList.stream().forEach(employee -> {
+        for (Employee employee : employeeList) {
             employeeResponseList.add(new EmployeeResponse(employee));
-        });
+        }
 
         Map<String, Object> response = new HashMap<>();
         response.put("statusCode", 1);

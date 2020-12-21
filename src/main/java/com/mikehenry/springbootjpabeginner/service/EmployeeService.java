@@ -53,7 +53,7 @@ public class EmployeeService {
 
         employee = employeeRepository.save(employee);
 
-        List<Tasks> empTasks = new ArrayList<Tasks>();
+        List<Tasks> empTasks = new ArrayList<>();
         if (employeePayload.getEmployeeTasks() != null) {
             for (TaskList myTaskList:employeePayload.getEmployeeTasks()) {
                 Tasks tasks = new Tasks();

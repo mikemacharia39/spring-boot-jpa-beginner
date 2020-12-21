@@ -42,8 +42,8 @@ public class EmployeeResponse {
             this.city = employee.getAddress().getCity();
         }
 
-        if (!Utilities.isEmpty(employee.getTasksList())) {
-            taskResponseList = new ArrayList<TaskResponse>();
+        if (employee.getTasksList() != null) {
+            taskResponseList = new ArrayList<>();
             for (Tasks task: employee.getTasksList()) {
                 taskResponseList.add(new TaskResponse(task));
             }

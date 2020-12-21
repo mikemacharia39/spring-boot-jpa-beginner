@@ -24,8 +24,14 @@ Ensuring that even if the database language changes, code remains constant.
 
 2. mvn clean install package 
 
-### Testing 
+### API Documentation
+* API documentation has been provided on the API by use of swagger tools
+* Start the application on port 8082 and use the below url to access the documentation 
+http://localhost:8082/swagger-ui.html
 
+### More 
+
+#### Testing
 * Postman collection 
 https://www.getpostman.com/collections/cea5f246aa1ab3914924
 

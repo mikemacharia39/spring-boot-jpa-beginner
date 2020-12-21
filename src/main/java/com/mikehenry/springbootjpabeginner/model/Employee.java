@@ -38,12 +38,10 @@ public class Employee {
     @Column(insertable = false, updatable = false)
     private Date dateModified;
 
-    //@OneToOne(fetch = FetchType.LAZY) //to support lazy loading
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "addressID")
-    Address address;
+    private Address address;
 
-    @OneToMany
-    @JoinColumn(name = "employee")
+    @OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
     private List<Tasks> tasksList;
 }

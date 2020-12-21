@@ -17,7 +17,7 @@ public class Tasks {
 
     private String taskName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "employeeID")
     private Employee employee;
 }
