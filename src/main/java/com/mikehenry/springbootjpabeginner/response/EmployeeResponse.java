@@ -1,11 +1,15 @@
 package com.mikehenry.springbootjpabeginner.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mikehenry.springbootjpabeginner.Utils.Utilities;
 import com.mikehenry.springbootjpabeginner.model.Employee;
+import com.mikehenry.springbootjpabeginner.model.Tasks;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +26,7 @@ public class EmployeeResponse {
     private Date dateModified;
     private String address;
     private String city;
+    private List<TaskResponse> taskResponseList;
 
     public EmployeeResponse(Employee employee) {
         this.employeeID = employee.getEmployeeID();
@@ -31,7 +36,17 @@ public class EmployeeResponse {
         this.active = employee.getActive();
         this.dateCreated = employee.getDateCreated();
         this.dateModified = employee.getDateModified();
-        this.address = employee.getAddress().getAddress();
-        this.city = employee.getAddress().getCity();
+
+        if (employee.getAddress() != null) {
+            this.address = employee.getAddress().getAddress();
+            this.city = employee.getAddress().getCity();
+        }
+
+        if (!Utilities.isEmpty(employee.getTasksList())) {
+            taskResponseList = new ArrayList<TaskResponse>();
+            for (Tasks task: employee.getTasksList()) {
+                taskResponseList.add(new TaskResponse(task));
+            }
+        }
     }
 }

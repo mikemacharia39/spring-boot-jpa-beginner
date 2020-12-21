@@ -3,9 +3,13 @@ package com.mikehenry.springbootjpabeginner.service;
 import com.mikehenry.springbootjpabeginner.Utils.Utilities;
 import com.mikehenry.springbootjpabeginner.model.Address;
 import com.mikehenry.springbootjpabeginner.model.Employee;
+import com.mikehenry.springbootjpabeginner.model.Tasks;
 import com.mikehenry.springbootjpabeginner.repository.AddressRepository;
 import com.mikehenry.springbootjpabeginner.repository.EmployeeRepository;
+import com.mikehenry.springbootjpabeginner.repository.TaskRepository;
+import com.mikehenry.springbootjpabeginner.request.CreateEmployeePayload;
 import com.mikehenry.springbootjpabeginner.request.InQueryRequest;
+import com.mikehenry.springbootjpabeginner.request.TaskList;
 import com.mikehenry.springbootjpabeginner.request.UpdateEmployeePayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +29,9 @@ public class EmployeeService {
 
     @Autowired
     AddressRepository addressRepository;
+
+    @Autowired
+    TaskRepository taskRepository;
 
     /**
      * To return the list of all employees
@@ -38,12 +46,27 @@ public class EmployeeService {
      * @param employee Object containing Employee data
      * @return instance of saved employee record
      */
-    public Optional<Employee> createEmployee(Employee employee, Address address) {
+    public Optional<Employee> createEmployee(Employee employee, Address address, CreateEmployeePayload employeePayload) {
         address = addressRepository.save(address);
 
         employee.setAddress(address);
 
-        return Optional.of(employeeRepository.save(employee));
+        employee = employeeRepository.save(employee);
+
+        List<Tasks> empTasks = new ArrayList<Tasks>();
+        if (employeePayload.getEmployeeTasks() != null) {
+            for (TaskList myTaskList:employeePayload.getEmployeeTasks()) {
+                Tasks tasks = new Tasks();
+                tasks.setTaskName(myTaskList.getTaskName());
+                tasks.setEmployee(employee);
+                empTasks.add(tasks);
+            }
+            taskRepository.saveAll(empTasks);
+        }
+
+        employee.setTasksList(empTasks);
+
+        return Optional.of(employee);
     }
 
     /**

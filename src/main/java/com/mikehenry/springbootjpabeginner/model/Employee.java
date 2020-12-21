@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -37,7 +38,12 @@ public class Employee {
     @Column(insertable = false, updatable = false)
     private Date dateModified;
 
-    @OneToOne(fetch = FetchType.LAZY) //to support lazy loading
+    //@OneToOne(fetch = FetchType.LAZY) //to support lazy loading
+    @OneToOne
     @JoinColumn(name = "addressID")
     Address address;
+
+    @OneToMany
+    @JoinColumn(name = "employee")
+    private List<Tasks> tasksList;
 }

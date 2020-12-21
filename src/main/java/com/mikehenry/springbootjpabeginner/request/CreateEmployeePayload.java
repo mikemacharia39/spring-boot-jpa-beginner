@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +26,6 @@ public class CreateEmployeePayload {
 
     @NotBlank(message = "city is required")
     String city;
+
+    List<TaskList> employeeTasks;
 }

@@ -30,4 +30,8 @@ public class Address {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(insertable = false, updatable = false)
     private Date dateModified;
+
+    // Bi-directional support for joins. Non-owning side
+    @OneToOne(mappedBy = "address")
+    private Employee employee;
 }
