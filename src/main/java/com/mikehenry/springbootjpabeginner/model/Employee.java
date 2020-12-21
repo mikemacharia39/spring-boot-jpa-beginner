@@ -37,8 +37,7 @@ public class Employee {
     @Column(insertable = false, updatable = false)
     private Date dateModified;
 
-    @OneToOne
-    // @OneToOne(fetch = FetchType.LAZY) to support lazy loading
+    @OneToOne(fetch = FetchType.LAZY) //to support lazy loading
     @JoinColumn(name = "addressID")
     Address address;
 }

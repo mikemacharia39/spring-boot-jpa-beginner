@@ -31,7 +31,7 @@ public class EmployeeResponse {
         this.active = employee.getActive();
         this.dateCreated = employee.getDateCreated();
         this.dateModified = employee.getDateModified();
-        this.address = employee.getAddress().getAddress() != null ? employee.getAddress().getAddress() : "";
-        this.city = employee.getAddress().getCity() != null ? employee.getAddress().getCity() : "";
+        this.address = employee.getAddress().getAddress();
+        this.city = employee.getAddress().getCity();
     }
 }
