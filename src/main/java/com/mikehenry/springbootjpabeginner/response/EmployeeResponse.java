@@ -20,6 +20,8 @@ public class EmployeeResponse {
     private Date dateCreated;
     @JsonIgnore
     private Date dateModified;
+    private String address;
+    private String city;
 
     public EmployeeResponse(Employee employee) {
         this.employeeID = employee.getEmployeeID();
@@ -29,5 +31,7 @@ public class EmployeeResponse {
         this.active = employee.getActive();
         this.dateCreated = employee.getDateCreated();
         this.dateModified = employee.getDateModified();
+        this.address = employee.getAddress().getAddress() != null ? employee.getAddress().getAddress() : "";
+        this.city = employee.getAddress().getCity() != null ? employee.getAddress().getCity() : "";
     }
 }

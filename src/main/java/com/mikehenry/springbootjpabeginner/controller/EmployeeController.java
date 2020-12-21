@@ -2,6 +2,7 @@ package com.mikehenry.springbootjpabeginner.controller;
 
 
 import com.mikehenry.springbootjpabeginner.Utils.Utilities;
+import com.mikehenry.springbootjpabeginner.model.Address;
 import com.mikehenry.springbootjpabeginner.model.Employee;
 import com.mikehenry.springbootjpabeginner.request.CreateEmployeePayload;
 import com.mikehenry.springbootjpabeginner.request.InQueryRequest;
@@ -50,7 +51,11 @@ public class EmployeeController {
         employee.setEmailAddress(employeePayload.getEmailAddress());
         employee.setActive(1);
 
-        Optional<Employee> employeeData = employeeService.createEmployee(employee);
+        Address address = new Address();
+        address.setAddress(employeePayload.getAddress());
+        address.setCity(employeePayload.getCity());
+
+        Optional<Employee> employeeData = employeeService.createEmployee(employee, address);
 
         List<EmployeeResponse> employeeResponseList = new ArrayList<>();
 

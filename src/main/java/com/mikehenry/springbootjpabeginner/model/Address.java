@@ -11,22 +11,16 @@ import java.util.Date;
 @Getter
 @Setter
 @Entity
-@Table(name = "employees")
-public class Employee {
+@Table(name = "address")
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "employeeID")
-    private long employeeID;
+    private long addressID;
 
-    @Column(nullable = false)
-    private String firstName;
+    private String address;
 
-    private String lastName;
-
-    private String emailAddress;
-
-    private int active;
+    private String city;
 
     @Generated(GenerationTime.INSERT)
     @Temporal(TemporalType.TIMESTAMP)
@@ -36,9 +30,4 @@ public class Employee {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(insertable = false, updatable = false)
     private Date dateModified;
-
-    @OneToOne
-    // @OneToOne(fetch = FetchType.LAZY) to support lazy loading
-    @JoinColumn(name = "addressID")
-    Address address;
 }

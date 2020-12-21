@@ -19,4 +19,10 @@ public class CreateEmployeePayload {
 
     @Pattern(regexp = "^(.+)@(.+)$", message = "Please enter a valid email address")
     String emailAddress;
+
+    @NotBlank(message = "address is required")
+    String address;
+
+    @NotBlank(message = "city is required")
+    String city;
 }

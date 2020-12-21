@@ -1,7 +1,9 @@
 package com.mikehenry.springbootjpabeginner.service;
 
 import com.mikehenry.springbootjpabeginner.Utils.Utilities;
+import com.mikehenry.springbootjpabeginner.model.Address;
 import com.mikehenry.springbootjpabeginner.model.Employee;
+import com.mikehenry.springbootjpabeginner.repository.AddressRepository;
 import com.mikehenry.springbootjpabeginner.repository.EmployeeRepository;
 import com.mikehenry.springbootjpabeginner.request.InQueryRequest;
 import com.mikehenry.springbootjpabeginner.request.UpdateEmployeePayload;
@@ -20,6 +22,9 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
 
+    @Autowired
+    AddressRepository addressRepository;
+
     /**
      * To return the list of all employees
      * @return List of all employees
@@ -33,7 +38,11 @@ public class EmployeeService {
      * @param employee Object containing Employee data
      * @return instance of saved employee record
      */
-    public Optional<Employee> createEmployee(Employee employee) {
+    public Optional<Employee> createEmployee(Employee employee, Address address) {
+        address = addressRepository.save(address);
+
+        employee.setAddress(address);
+
         return Optional.of(employeeRepository.save(employee));
     }
 
@@ -139,6 +148,15 @@ public class EmployeeService {
         Pageable pageable = PageRequest.of(0, 1, Sort.Direction.DESC, "employeeID");
 
         return employeeRepository.findAll(pageable).getContent();
+    }
+
+    /**
+     * To delete employee by Email
+     * @param emailAddress String employee email
+     * @return 0 if none affected otherwise >= 1 if more than 1 row affected
+     */
+    public Integer deleteEmployeeByMail(String emailAddress) {
+        return employeeRepository.deleteEmployeeByEmail(emailAddress);
     }
 
 }
