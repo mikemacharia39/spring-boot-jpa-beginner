@@ -2,6 +2,7 @@ package com.mikehenry.springbootjpabeginner.request;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class CreateEmployeePayload {
 
     @NotBlank(message = "first name is required")
